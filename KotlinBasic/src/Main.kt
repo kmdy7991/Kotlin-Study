@@ -82,11 +82,58 @@ fun main() {
 
     // 외부에서 class 멤버 변수를 조작하는 상황
     // hobby.hobby = "야구"
+
+
+    val dog: Animal = Dog()
+    val cat = Cat()
+
+    // is keyword를 통해 객체 타입을 확인할 수 있다
+    // Dog type을 비교해서 true라면 abstract, interface method 사용가능
+    if (dog is Dog) {
+        println("강아지")
+        println(dog.move())
+        println(dog.draw())
+    }
+
+    // 부모객체로 비교하면 abstract method인 move만 실행 가능
+    if (dog is Animal) {
+        println(dog.move())
+    }
+
+    // 아래와 같이 타입을 강제 캐스팅이 가능, Error 발생
+//     cat as Dog
+
+    // Generics
+    // 명시적으로 작성하는게 좋으나 생략 가능
+    val box = Box<Int>(50)
+    val box2 = Box("BOX")
+
+    box.value = 10
+    println(box.value)
+
+
+    // 기본적인 형태
+    myFunc({ println("고차 함수 호출") })
+
+    // kotlin에서 전달하는 인자가 함수일때 소괄호 밖에서 정의할 수 있음
+    myFunc() { println("고차 함수 호출") }
+
+    // kotlin에서 함수에 전달하는 매개변수가 함수 하나일때 소괄호 생략 가능
+    myFunc { println("고차 함수 호출") }
 }
 
+// output이 없을때 Unit으로 지정, Unit의 Default 값으로 {}를 지정하여 외부에서 {}를 사용하지 않게 할 수 있음
+fun myFunc(callback: () -> Unit) {
+    callback()
+}
+
+// value 앞에 변수 타입을 지정해 값을 조회하거나 변경할 수 있음
+class Box<T>(var value: T) {
+
+}
 
 // ----------------------------------------Abstract & Interface---------------------------------------
-interface Drawable{
+interface Drawable {
     fun draw()
 }
 
@@ -98,7 +145,7 @@ class Swallow : Bird()
 
 abstract class Animal {
     // open keyword를 통해 override를 허용
-    open fun move(){
+    open fun move() {
         println("move")
     }
 }
@@ -110,11 +157,11 @@ class Dog : Animal(), Drawable {
     }
 
     override fun draw() {
-        TODO("Not yet implemented")
+        println("draw")
     }
 }
 
-class Cat: Animal() {
+class Cat : Animal() {
 
 }
 // ---------------------------------------------------------------------------------------------------
@@ -127,18 +174,18 @@ class Hobby(val name: String, val age: Int) {
         private set
         get() = "취미 : $field"
 
-    init{
+    init {
         println("create habit")
     }
 
-    fun some(){
+    fun some() {
         hobby = "농구"
     }
 }
 
 // init문을 통해 객체 생성시 별도의 작업을 지정 가능
-class Init(val name: String){
-    init{
+class Init(val name: String) {
+    init {
         println("Init")
     }
 }
