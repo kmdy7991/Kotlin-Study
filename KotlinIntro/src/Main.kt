@@ -51,7 +51,7 @@ fun main() {
     except()
 
     //null - safety
-//    nullUse()
+    nullUse()
 
     // function
     makeFunction1(5, 6)
